@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# get active firewalld zones
+sudo firewall-cmd --get-active-zones | xargs -d'\n'
+
+# get internal sshd port
+sudo firewall-cmd --zone=internal --list-all | grep tcp | sed 's/^[ \t]*//'
+
+# get external port forwarding
+sudo firewall-cmd --zone=external --list-all | grep forward-ports
+
+# get work masquerade
+sudo firewall-cmd --zone=work --list-all | grep masquerade
+
+# get direct rules
+sudo cat /etc/firewalld/direct.xml | xargs -d'\n'
+
+# get fail2ban config
+sudo cat /etc/fail2ban/jail.local | xargs -d'\n'
